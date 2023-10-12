@@ -18,24 +18,11 @@ contract TirelireAvecStructure {
     }
 
     function getTotalBalance() public view returns (uint256) {
-        uint256 total = 0;
-
-        for (uint256 i = 0; i < addressList.length; i++) {
-            address userAddress = addressList[i];
-            total += Balances[userAddress].money;
-        }
-
-        return total;
+        return address(this).balance;
     }
-
-    address[] public addressList;
 
     receive() external payable {
         Balances[msg.sender].money += msg.value;
         Balances[msg.sender].paymentsCount++;
-
-        if (Balances[msg.sender].paymentsCount == 1) {
-            addressList.push(msg.sender);
-        }
     }
 }
